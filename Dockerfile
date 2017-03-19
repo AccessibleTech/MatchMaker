@@ -26,16 +26,16 @@ RUN curl -sSL https://downloads.sourceforge.net/project/swig/swig/swig-$SWIG_VER
     make install && \
     rm -rf /usr/src/swig-$SWIG_VERSION
 
-# install UPM
-RUN curl -sSL https://github.com/intel-iot-devkit/upm/archive/master.tar.gz \
-		| tar -C /usr/src -xz && \
-    cd /usr/src/upm-master && \
+# Build UPM
+ENV UPM_VERSION 1.1.0
+RUN curl -sSL https://github.com/intel-iot-devkit/upm/archive/v$UPM_VERSION.tar.gz | tar -C /usr/src -xz && \
+    cd /usr/src/upm-$UPM_VERSION && \
     mkdir build && \
     cd build && \
     cmake .. -DBUILDSWIGNODE=OFF && \
     make && \
     make install && \
-		rm -rf /usr/src/upm-master
+		rm -rf /usr/src/upm-$UPM_VERSION
 
 # Set our working directory
 WORKDIR /usr/src/app
