@@ -3,8 +3,12 @@
 FROM resin/edison-python:3.5
 
 # use apt-get if you need to install dependencies,
-RUN apt-get update && apt-get install -yq \
-    libglib2.0-dev libbluetooth-dev libboost-python-dev libboost-thread-dev && \
+RUN apt-get update && apt-get install -yq bluez \
+                                          bluez-tools \
+																					libbluetooth-dev \
+																					libboost-python-dev \
+                                          libboost-thread-dev \
+                                          libglib2.0-dev && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set our working directory
