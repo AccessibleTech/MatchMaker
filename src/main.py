@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 app = Flask(__name__)
 
@@ -15,8 +15,13 @@ def devices():
     service = DiscoveryService("hci0")
     devices = service.discover(2)
 
-    return '\n'.join("name: {}, address: {}".format(name, address)
-                     for address, name in devices.items())
+    res = {}
+    for address, name in devices.items():
+        print("name: {}, address: {}".format(name, address))
+        if name.startswith('edison'):
+            res[name] = address
+
+    return jsonify(res)
 
 
 if __name__ == '__main__':
