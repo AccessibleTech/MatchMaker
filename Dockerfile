@@ -3,10 +3,9 @@
 FROM resin/edison-python:3.5
 
 # use apt-get if you need to install dependencies,
-# for instance if you need ALSA sound utils, just uncomment the lines below.
-# RUN apt-get update && apt-get install -yq \
-#    alsa-utils libasound2-dev && \
-#    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -yq \
+    libglib2.0-dev libbluetooth-dev libboost-python-dev libboost-thread-dev && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set our working directory
 WORKDIR /usr/src/app
