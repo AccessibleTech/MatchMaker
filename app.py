@@ -3,8 +3,7 @@ import time
 
 from gattlib import DiscoveryService
 from upm import pyupm_grove as grove
-
-led = grove.GroveLed(int(environ.get('LED_COLOR', 2)))
+from upm import pyupm_grovespeaker as upmGrovespeaker
 
 for i in range(0, 5):
     try:
@@ -15,6 +14,8 @@ for i in range(0, 5):
 
 while True:
     devices = service.discover(5)
+    led = grove.GroveLed(int(environ.get('LED_COLOR', 2)))
+    mySpeaker = upmGrovespeaker.GroveSpeaker(int(environ.get('SPEAKER_PIN', 8)))
 
     for address, name in devices.items():
         if name.startswith('edison') or address.startswith('58:A8:39:00'):
@@ -23,6 +24,6 @@ while True:
             # between transitions
             for i in range(0, 10):
                 led.on()
-                time.sleep(.25)
+                mySpeaker.playAll()
                 led.off()
-                time.sleep(.25)
+                time.sleep(.5)
