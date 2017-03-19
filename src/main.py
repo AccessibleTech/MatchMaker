@@ -15,8 +15,8 @@ def devices():
     service = DiscoveryService("hci0")
     devices = service.discover(2)
 
-    for address, name in devices.items():
-        print("name: {}, address: {}".format(name, address))
+    return '\n'.join("name: {}, address: {}".format(name, address)
+                     for address, name in devices.items())
 
 
 if __name__ == '__main__':
