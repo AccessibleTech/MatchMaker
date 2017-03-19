@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -yq bluez \
 																					libbluetooth-dev \
 																					libboost-python-dev \
                                           libboost-thread-dev \
-                                          libglib2.0-dev && \
+                                          libglib2.0-dev \
+                                          rfkill && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set our working directory
