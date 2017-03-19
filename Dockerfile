@@ -3,22 +3,30 @@
 FROM resin/edison-python:3.5
 
 # use apt-get if you need to install dependencies,
-RUN add-apt-repository ppa:mraa/mraa && \
-    apt-get update && apt-get install -yq bluez \
+RUN apt-get update && apt-get install -yq bluez \
                                           bluez-tools \
+                                          cmake \
 																					libbluetooth-dev \
 																					libboost-python-dev \
                                           libboost-thread-dev \
                                           libglib2.0-dev \
-                                          libupm-dev \
-                                          python-upm \
-                                          python3-upm \
                                           rfkill \
-                                          upm-examples && \
+                                          swig3.0 && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Keep device discoverable
 ADD main.conf /etc/bluetooth/main.conf
+
+# install UPM
+RUN curl -sSL https://github.com/intel-iot-devkit/upm/archive/master.tar.gz \
+		| tar -v -C /usr/src -xz && \
+    cd /usr/src/upm-master && \
+    mkdir build && \
+    cd build && \
+    cmake .. -DBUILDSWIGNODE=OFF && \
+    make && \
+    make install && \
+		rm -rf /usr/src/upm-master
 
 # Set our working directory
 WORKDIR /usr/src/app
