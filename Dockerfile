@@ -3,13 +3,18 @@
 FROM resin/edison-python:3.5
 
 # use apt-get if you need to install dependencies,
-RUN apt-get update && apt-get install -yq bluez \
+RUN add-apt-repository ppa:mraa/mraa && \
+    apt-get update && apt-get install -yq bluez \
                                           bluez-tools \
 																					libbluetooth-dev \
 																					libboost-python-dev \
                                           libboost-thread-dev \
                                           libglib2.0-dev \
-                                          rfkill && \
+                                          libupm-dev \
+                                          python-upm \
+                                          python3-upm \
+                                          rfkill \
+                                          upm-examples && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Keep device discoverable
