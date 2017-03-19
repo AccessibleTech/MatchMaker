@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -yq bluez \
                                           rfkill && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
+# Keep device discoverable
+ADD main.conf /etc/bluetooth/main.conf
+
 # Set our working directory
 WORKDIR /usr/src/app
 
