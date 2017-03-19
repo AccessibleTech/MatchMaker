@@ -10,16 +10,25 @@ RUN apt-get update && apt-get install -yq bluez \
 																					libboost-python-dev \
                                           libboost-thread-dev \
                                           libglib2.0-dev \
-                                          rfkill \
-                                          swig3.0 && \
+                                          rfkill && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Keep device discoverable
 ADD main.conf /etc/bluetooth/main.conf
 
+# Build SWIG
+ENV SWIG_VERSION 3.0.12
+RUN curl -sSL https://downloads.sourceforge.net/project/swig/swig/swig-$SWIG_VERSION/swig-$SWIG_VERSION.tar.gz \
+		| tar -C /usr/src -xz && \
+    cd /usr/src/swig-$SWIG_VERSION && \
+    ./configure && \
+    make && \
+    make install && \
+    rm -rf /usr/src/swig-$SWIG_VERSION
+
 # install UPM
 RUN curl -sSL https://github.com/intel-iot-devkit/upm/archive/master.tar.gz \
-		| tar -v -C /usr/src -xz && \
+		| tar -C /usr/src -xz && \
     cd /usr/src/upm-master && \
     mkdir build && \
     cd build && \
