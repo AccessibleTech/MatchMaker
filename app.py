@@ -6,8 +6,12 @@ from upm import pyupm_grove as grove
 
 led = grove.GroveLed(int(environ.get('LED_COLOR', 2)))
 
-time.sleep(.25)
-service = DiscoveryService("hci0")
+for i in range(0, 5):
+    try:
+        service = DiscoveryService("hci0")
+        break
+    except:
+        time.sleep(.25)
 
 while True:
     devices = service.discover(5)
